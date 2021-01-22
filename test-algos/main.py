@@ -26,7 +26,7 @@ user_id = input("user id: ")
 city_name = input("city name : ")
 
 # base_url + api_key + city_name = final url
-final_url = creds['BASE_URL'] + "q=" + city_name + "&appid=" + api_key
+final_url = creds['BASE_URL'] + "q=" + city_name + "&appid=" + api_key + "&units=metric"
 
 # capture own api json data
 w_data = requests.get(final_url).json()
@@ -42,6 +42,7 @@ if w_data["cod"] != "404":
 
 else:
     print('not found')
+
 # ------------------------------------------------------------------------
 with open("result.json", mode='r', encoding='utf-8') as f:
     f_result = json.load(f)
