@@ -110,7 +110,8 @@ def extract_fields_from_response(u_id, response):
     c_id = res.get("id")
     temp = main_a.get("temp")
     humidity = main_a.get("humidity")
-
+    # TODO UNTESTED - TEST IT
+    save_to_json(user_id_search, c_id, temp, humidity)
     return (
         user_id_search,
         c_name,
@@ -120,7 +121,6 @@ def extract_fields_from_response(u_id, response):
     )
 
 
-# TODO IMPLEMENT IT IN THE LOOP
 def save_to_json(u_id, c_id, temp, humidity):
     with open("result.json", mode='r', encoding='utf-8') as f:
         f_result = json.load(f)
@@ -140,9 +140,9 @@ async def run_program(city_id, session):
     try:
         response = await fetch_url(city_id, session)
         parsed_response = extract_fields_from_response(main_loop.u_id, response)
-        save_to_json(main_loop.u_id, city_id,
-                     extract_fields_from_response.temp, extract_fields_from_response.humidity)
         print(f"Response: {json.dumps(parsed_response, indent=2)}")
+        print(f"save to json: {json.dumps(save_to_json, indent=2)}")
+
     except Exception as err:
         print(f"Exception occured: {err}")
         pass
@@ -171,7 +171,7 @@ def main_loop():
     if request.method == 'POST':
         pass
         # Receives user id (created in html file)
-        u_id = request.args.get('msg')
+        u_id = request.args.get('u_id')
 
         # activate owm_async here (maybe not good idea)
         asyncio.run(main())
@@ -189,13 +189,14 @@ def main_loop():
         if request.method == 'GET':
             pass
             # info = request.args.get('modded_u_id','progress')
-            # return str('u_id',progress)
+            # return str(info)
 
         pass
 
 
 if __name__ == "__main__":
-    app.run(Debug=True)
+    app.run()
     s = time.perf_counter()
     elapsed = time.perf_counter() - s
+    # print(main_loop.info)
     print(f"{__file__} executed in {elapsed:0.2f} seconds.")

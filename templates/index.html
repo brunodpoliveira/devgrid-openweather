@@ -8,10 +8,11 @@
       <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
   </head>
   <body>
-      <div id="userInput">
-        <input id="textInput" type="text" name="msg" placeholder="insert user id">
-        <input id="buttonInput" type="submit" value="send">
-      </div>
+      <form action = "http://localhost:5000/submit" method = "POST">
+         <p>Insert User Id:</p>
+         <p><input type = "text" name = "u_id" /></p>
+         <p><input type = "submit" value = "submit" /></p>
+      </form>
       <script>
         function getBotResponse() {
           var rawText = $("#textInput").val();
