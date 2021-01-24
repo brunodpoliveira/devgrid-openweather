@@ -16,7 +16,7 @@ from typing import IO
 import time
 from ratelimit import limits, RateLimitException, sleep_and_retry
 from backoff import on_exception, expo
-from app import user_id
+import app
 
 # ------------------------------------------------------------------------
 logging.basicConfig(
@@ -44,8 +44,6 @@ def timeconverter(o):
         return o.__str__()
 
 
-# TODO SEE IF C_ID CAN BE PUT IN OTHER .PY FILE
-
 c_id_array = [
     "3439525", "3439781", "3440645", "3442098", "3442778", "3443341", "3442233", "3440781", "3441572",
     "3441575", "3443207", "3442546", "3441287", "3441242", "3441686", "3440639", "3441354", "3442057",
@@ -68,9 +66,6 @@ c_id_array = [
     "3443952", "3480812", "3480820", "3480822", "3480825"]
 
 
-# TODO USER ID (UNIQUE FOR EACH REQUEST) + DATETIME "POST" LOOP
-
-
 async def fetch_url(city_id, session):
     """create and fetch urls, using array to store the cities ids"""
     # base_url + group_id + api_key +  = final url (units changed to metric - standard is kelvin)
@@ -87,9 +82,9 @@ async def fetch_url(city_id, session):
     return response_json
 
 
-
 # TODO SEE IF WE CAN PUT THIS DEF IN APP.PY
 one_min = 60
+
 
 # TODO FIX RATE LIMIT EXCEPTION W/OUT RAISING CALLS/MIN (CALLS=167 SOLVES IT)
 @on_exception(expo, RateLimitException, max_tries=8)
@@ -117,24 +112,7 @@ def extract_fields_from_response(u_id, response):
     )
 
 
-# TODO CREATE SAVE_TO_JSON AND IMPLEMENT IT IN THE LOOP
-def save_to_json(c_id, u_id, temp, humidity):
-    with open("result.json", mode='r', encoding='utf-8') as f:
-        f_result = json.load(f)
-    with open("result.json", mode='w', encoding='utf-8') as f:
-        entry = {'CITY_ID': c_id, 'TEMPERATURE': temp, 'HUMIDITY': humidity}
-        f_result.append(entry)
-        json.dump(f_result, f)
-    with open("user_id.json", mode='r', encoding='utf-8') as f:
-        f2_result = json.load(f)
-    with open("user_id.json", mode='w', encoding='utf-8') as f:
-        entry = {'USER_ID': u_id, 'REQUEST_DATETIME': json.dumps(d, default=timeconverter)}
-        f2_result.append(entry)
-        json.dump(f2_result, f)
-
-
 async def run_program(city_id, session):
-    # TODO "POST" PROGRESS ID
     try:
         response = await fetch_url(city_id, session)
         parsed_response = extract_fields_from_response(user_id, response)

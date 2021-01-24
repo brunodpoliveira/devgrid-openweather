@@ -1,6 +1,8 @@
 from flask import Flask, render_template, request
+import json
 import os
 import owm_async
+from owm_async import d, timeconverter
 
 app = Flask(__name__)
 
@@ -10,6 +12,22 @@ if ENV == 'dev':
     app.debug = True
 else:
     app.debug = False
+
+
+# TODO IMPLEMENT IT IN THE LOOP
+def save_to_json(c_id, u_id, temp, humidity):
+    with open("result.json", mode='r', encoding='utf-8') as f:
+        f_result = json.load(f)
+    with open("result.json", mode='w', encoding='utf-8') as f:
+        entry = {'CITY_ID': c_id, 'TEMPERATURE': temp, 'HUMIDITY': humidity}
+        f_result.append(entry)
+        json.dump(f_result, f)
+    with open("user_id.json", mode='r', encoding='utf-8') as f:
+        f2_result = json.load(f)
+    with open("user_id.json", mode='w', encoding='utf-8') as f:
+        entry = {'USER_ID': u_id, 'REQUEST_DATETIME': json.dumps(d, default=timeconverter)}
+        f2_result.append(entry)
+        json.dump(f2_result, f)
 
 
 @app.route("/")
@@ -30,8 +48,9 @@ def main_loop():
         # activate extract_fields_from_response here
         # store u_id (unique for each request)(u_id_r)
         # save u_id_r, datetime request
-        # save json data (c_id,temp,humidity) (save_to_json)
-        # send POST progress and u_id_r in progress to GET
+        # save json data (c_id,temp,humidity) (def save_to_json)(return jsonify?)
+        # send POST progress and u_id_r in 'progress' to GET
+        # return progress
 
         # TODO Receives the user defined ID,
         #  returns with the percentage of the POST progress ID (collected cities completed)
@@ -39,8 +58,8 @@ def main_loop():
         if request.method == 'GET':
             # Receives user id (created in html file)
             pass
-            # info = request.args.get('progress')
-            # return str(progress)
+            # info = request.args.get('u_id','progress')
+            # return str('u_id',progress)
 
         pass
 
