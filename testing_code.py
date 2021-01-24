@@ -9,7 +9,7 @@ the error is handled as expected
 """
 
 
-def bad_api_key():
+def test_api_key():
     """
      Function to test if error handling is working
       for all functions that requires an API Key to make a request`.
@@ -23,10 +23,36 @@ def bad_api_key():
     pass
 
 
-def bad_adress():
+def test_fetch_url():
     """
      Function to test if error handling is working for fetch url()`.
     - It's expected for fetch url to return `None`
+    """
+    response = ''
+    if response == None:
+        return 1
+    return 0
+
+    pass
+
+
+def test_extract_fields_from_response():
+    """
+     Function to test if error handling is working`.
+    - It's expected for it to return `None`
+    """
+    response = ''
+    if response == None:
+        return 1
+    return 0
+
+    pass
+
+
+def test_run_program():
+    """
+     Function to test if error handling is working for`.
+    - It's expected for it to return `None`
     """
     response = ''
     if response == None:
@@ -51,11 +77,8 @@ def everything_wrong():
 
 if __name__ == '__main__':
     print('Test began')
-    test = bad_api_key()
-    if test.response == 0:
+    test1 = test_fetch_url()
+    if test1.response == 0:
         print('fail')
     else:
         print('sucess')
-
-    #test2 = bad_adress()
-    #test3 = everything_wrong()
