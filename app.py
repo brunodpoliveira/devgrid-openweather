@@ -17,50 +17,33 @@ def home():
     return render_template("index.html")
 
 
-# TODO Receives a user defined ID, collect weather data from Open Weather API and store:
+# TODO Receives a user defined ID, collect weather data from Open Weather API(done) and store:
 # USER DEFINED ID, DATETIME OF REQUEST, JSON DATA W/ CITY ID,TEMP(C),HUMIDITY
 
-@app.route('/users/<user_id>', methods=['GET', 'POST'])
-def user(u_id):
-    if request.method == 'GET':
-        """return the information for <user_id>"""
-        # receive create user id in html file
-        # u_id = request.args.get(user)
-
-    if request.method == 'POST':
-        """modify/update the information for <user_id>"""
-        # generate unique id for each request
-        # send modded user id to def init GET request
-
-
-@app.route('/api', methods=['GET', 'POST'])
-def initialize():
-    # html code to activate def user here or in html file
+@app.route('/submit', methods=['GET', 'POST'])
+def main_loop():
     if request.method == 'POST':
         pass
+        # Receives user id (created in html file)
         # activate owm_async here
         # activate fetch_url here
         # activate extract_fields_from_response here
-        # save u_id_mod (from def user), datetime request
+        # store u_id (unique for each request)(u_id_r)
+        # save u_id_r, datetime request
         # save json data (c_id,temp,humidity) (save_to_json)
-        # send progress to GET
+        # send POST progress and u_id_r in progress to GET
 
         # TODO Receives the user defined ID,
         #  returns with the percentage of the POST progress ID (collected cities completed)
         #  until the current moment
         if request.method == 'GET':
+            # Receives user id (created in html file)
             pass
-            # postinfo = request.args.get('u_id_mod','post_progress')
-            # receive modded user id here
-            # POST progress here
-            # display it on html file
-
-        # return str(var_name_here.get_response(postinfo))
-        # return str(bot.get_response(usertext))
+            # info = request.args.get('progress')
+            # return str(progress)
 
         pass
 
 
 if __name__ == "__main__":
-    user_id = input('user id: ')
     app.run()
