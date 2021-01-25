@@ -10,7 +10,7 @@ import time
 from ratelimit import limits, RateLimitException, sleep_and_retry
 from backoff import on_exception, expo
 from progress.bar import IncrementalBar
-from app import user_id
+import app
 # ------------------------------------------------------------------------
 logging.basicConfig(
     format="%(asctime)s %(levelname)s:%(name)s: %(message)s",
@@ -71,9 +71,9 @@ async def fetch_url(city_id, session):
     try:
         response = await session.request(method='GET', url=url)
         response.raise_for_status()
+        print(f"Response status ({url}): {response.status}")
     except HTTPError as http_err:
         print(f"HTTP error occurred: {http_err}")
-        print(f"Response status ({url}): {response.status}")
     except Exception as err:
         print(f"An error ocurred: {err}")
     response_json = await response.json()
@@ -130,7 +130,7 @@ def save_to_json(c_id, u_id, temp, humidity):
 async def run_program(city_id, session):
     try:
         response = await fetch_url(city_id, session)
-        parsed_response = extract_fields_from_response(user_id, response)
+        parsed_response = extract_fields_from_response(app.user_id, response)
         print(f"Response: {json.dumps(parsed_response, indent=2)}")
     except Exception as err:
         print(f"Exception occured: {err}")

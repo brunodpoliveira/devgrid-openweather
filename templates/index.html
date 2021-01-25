@@ -1,11 +1,9 @@
-<!--Does not compile-->
+<!--WIP-->
 
 <!DOCTYPE html>
 <html>
   <head>
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-      <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-      <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   </head>
   <body>
       <form action = "http://localhost:5000/submit" method = "POST">
@@ -13,8 +11,9 @@
          <p><input type = "text" name = "u_id" /></p>
          <p><input type = "submit" value = "submit" /></p>
       </form>
+            <!--TODO MAKE GET_RESPONSE SCRIPT FUNCTIONAL-->
       <script>
-        function getBotResponse() {
+        function getResponse() {
           var rawText = $("#textInput").val();
           var userHtml = '<p class="userText"><span>' + rawText + '</span></p>';
           $("#textInput").val("");
@@ -28,16 +27,17 @@
         }
         $("#textInput").keypress(function(e) {
             if ((e.which == 13) && document.getElementById("textInput").value != "" ){
-                getBotResponse();
+                getResponse();
             }
         });
         $("#buttonInput").click(function() {
             if (document.getElementById("textInput").value != "") {
-                getBotResponse();
+                getResponse();
             }
         })
       </script>
         <div class="container">
+            <!--TODO MAKE GET RESPONSE FUNCTIONAL-->
     <form action="/submit" method="GET">
         <div class="form-group">
         </div>
