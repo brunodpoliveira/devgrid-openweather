@@ -78,7 +78,7 @@ def everything_wrong():
 if __name__ == '__main__':
     print('Test began')
     test1 = test_fetch_url()
-    if test1.response == 0:
-        print('fail')
+    if test1 == 0:
+        print('fetch url fail to handle exception')
     else:
-        print('sucess')
+        print('sucess in handling error')
