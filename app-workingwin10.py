@@ -21,7 +21,7 @@ from progress.bar import IncrementalBar
 import threading
 import nest_asyncio
 
-"""
+
 c_id_array = [
     "3439525", "3439781", "3440645", "3442098", "3442778", "3443341", "3442233", "3440781", "3441572",
     "3441575", "3443207", "3442546", "3441287", "3441242", "3441686", "3440639", "3441354", "3442057",
@@ -42,10 +42,6 @@ c_id_array = [
     "3442299", "3442716", "3442766", "3442803", "3442939", "3443061", "3443183", "3443256", "3443280",
     "3443289", "3443342", "3443356", "3443588", "3443631", "3443644", "3443697", "3443909", "3443928",
     "3443952", "3480812", "3480820", "3480822", "3480825"]
-"""
-
-c_id_array = [
-    "3439525", "3439781", "3440645", "3442098"]
 
 # ------------------------------------------------------------------------
 logging.basicConfig(
@@ -71,7 +67,6 @@ d = {'date': datetime.datetime.now()}
 def timeconverter(o):
     if isinstance(o, datetime.datetime):
         return o.__str__()
-
 
 app = Flask(__name__)
 
@@ -102,16 +97,15 @@ async def fetch_url(city_id, session):
 one_min = 60
 
 
-# TODO FIX ERROR An error ocurred: 429, message='Too Many Requests')
-# @on_exception(expo, RateLimitException, max_tries=8)
+# TODO FIX RATE LIMIT EXCEPTION W/OUT RAISING CALLS/MIN (CALLS=167 SOLVES IT)
+@on_exception(expo, RateLimitException, max_tries=8)
 @sleep_and_retry
 @limits(calls=60, period=one_min)
 # TODO CHANGE THIS DEF TO ASYNC
 def extract_fields_from_response(u_id, response):
     """Extract fields from API's response"""
     # TODO CHANGE .GET() TO .REQUEST()
-    # res = response.get("list", [{}], headers={'User-agent': 'your bot 0.1'}), [0]
-    res = response.get("list", [{}], [0])
+    res = response.get("list", [{}])[0]
     # TODO UNIQUE ID FOR EACH REQUEST
     user_id_request = u_id + str(' user')
     main_a = res.get("main")
@@ -152,7 +146,7 @@ async def run_program(city_id, session):
         response = await fetch_url(city_id, session)
         parsed_response = extract_fields_from_response(main_loop().u_id, response)
         print(f"Response: {json.dumps(parsed_response, indent=2)}")
-        print(f"save to json: {json.dumps(extract_fields_from_response.save_to_json, indent=2)}")
+        print(f"save to json: {json.dumps(save_to_json, indent=2)}")
 
     except Exception as err:
         print(f"Exception occured: {err}")
@@ -191,13 +185,14 @@ def percentage():
 @app.route('/submit', methods=['GET', 'POST'])
 def main_loop():
     # TODO PROPER INIT OF ASYNC START, PASS MODED_U_ID
+    # TODO FIX Exception occured: asyncio.run() cannot be called from a running event loop
     if request.method == 'POST':
         asyncio.run(main())
         # Receives user id (created in html file)
         u_id = request.args.get('u_id')
         # send POST progress and modded_u_id in 'progress' to GET
         # TODO FIX ERROR Cannot find reference 'modded_u_id' in 'function'
-        # modded_u_id = str(save_to_json)
+        #modded_u_id = str(save_to_json)
         modded_u_id = 'str(save_to_json'
 
         return modded_u_id
