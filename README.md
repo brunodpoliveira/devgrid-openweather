@@ -1,41 +1,72 @@
 # devgrid-openweather
-API that collects Open Weather data and store it as a .json file
+
+> WIP -- Development ongoing
+
+Program that collects Open Weather API data and store it as a .json file
+https://hub.docker.com/repository/docker/brunodpoliveira/devgrid-openweather
 
 # How to run
 
 ### Create OpenWeather Account
 https://openweathermap.org/home/sign_up
 
-### Rename api key
+### Collect API key
 https://home.openweathermap.org/api_keys
 
 > Rename it to API_KEY
+> Be aware of the 2-hour cooldown on new API keys
 
-### Create the api .json file
+### Update api.json 
 > In the line
 ```
 credentials = {'API_KEY': ''}
 ```
-> replace empty quotes w/ your key.
+> Replace empty quotes w/ your key.
 
-> Execute line below in terminal.
-```
-python3 creds.py
-```
+### Docker Initialization
 
-### Create two empty databases .json
+> Copy+paste the following on terminal
 ```
-with open(DATA_FILENAME, mode='w', encoding='utf-8') as f:
-    json.dump([], f)
+docker container run -t devgrid-openweather:latest -p 5000:5000
+```
+> It'll run the program in http://localhost:5000
 
-```
+### Alternate Initialization
 
-### add to list with this command
+> Type the following commands on terminal
 ```
-with open(DATA_FILENAME, mode='w', encoding='utf-8') as feedsjson:
-    entry = {'name': args.name, 'url': args.url}
-    feeds.append(entry)
-    json.dump(feeds, feedsjson)
+cd src
+python3 app.py
+```
+> it'll run the program in http://127.0.0.1:5000
 
-```
+
+# How to Test (WIP)
+
+### Run testing_code.py
+
+> as of this commit, testing_code.py is a placeholder script. It won't work
+
+# Tools Used + Reason
+
+### Requested by Supervisor
+
+> python,docker,github,asyncio
+
+### Personal Preference
+
+> ubuntu
+
+### Version Control
+
+> gitkraken (github), kitematic (docker)
+
+### Reusability of Code from Previous Project
+
+> flask
+
+
+
+
+
 
