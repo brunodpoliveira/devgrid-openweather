@@ -5,7 +5,7 @@
 Program that collects Open Weather API data and store it as a .json file
 https://hub.docker.com/repository/docker/brunodpoliveira/devgrid-openweather
 
-# How to run
+# How to Run
 
 ### Create OpenWeather Account
 https://openweathermap.org/home/sign_up
@@ -35,6 +35,7 @@ docker container run -t devgrid-openweather:latest -p 5000:5000
 
 > Type the following commands on terminal
 ```
+cd (folder where you saved devgrid here)
 cd src
 python3 app.py
 ```
