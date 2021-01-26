@@ -1,0 +1,9 @@
+Flask~=1.1.2
+aiohttp~=3.7.3
+aiofiles~=0.6.0
+pyowm~=3.1.1
+numpy~=1.19.5
+ratelimit~=2.2.1
+backoff~=1.10.0
+progress~=1.5
+requests~=2.25.1
