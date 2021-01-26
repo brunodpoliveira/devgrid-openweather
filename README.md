@@ -27,9 +27,9 @@ credentials = {'API_KEY': ''}
 
 > Copy+paste the following on terminal
 ```
-docker container run -t devgrid-openweather:latest -p 5000:5000
+docker container run devgrid-openweather
 ```
-> It'll run the program in http://localhost:5000
+> It'll run the program in http://0.0.0.0:5000/
 
 ### Alternate Initialization
 
