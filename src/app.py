@@ -1,9 +1,5 @@
 from flask import Flask, render_template, request
-import time
-import owm_async
-import asyncio
 import os
-import sys
 # ------------------------------------------------------------------------
 # TODO MAKE SURE OWM_ASYNC CAN SEE USER_ID FROM POST METHOD
 user_id = 'temporary, wrong one'
